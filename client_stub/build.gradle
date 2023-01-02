@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+    id 'com.google.protobuf'
+}
+
+dependencies {
+
+    // gRPC
+    implementation("io.grpc:grpc-stub:$grpc_version")
+    implementation("io.grpc:grpc-protobuf-lite:$grpc_version")
+    implementation("io.grpc:grpc-kotlin-stub:$grpc_kotlin_version")
+    implementation("com.google.protobuf:protobuf-kotlin-lite:$protobuf_version")
+}
+
+java {
+    sourceCompatibility JavaVersion.VERSION_11
+    targetCompatibility JavaVersion.VERSION_11
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
+    kotlinOptions {
+        freeCompilerArgs listOf("-opt-in=kotlin.RequiresOptIn")
+    }
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:$protobuf_version"
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:$grpc_version"
+        }
+        grpckt {
+            artifact = "io.grpc:protoc-gen-grpc-kotlin:$grpc_kotlin_version:jdk7@jar"
+        }
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java { option 'lite' }
+                kotlin { option 'lite' }
+            }
+            task.plugins {
+                grpc { option 'lite' }
+                grpckt { option 'lite' }
+            }
+        }
+    }
+}
