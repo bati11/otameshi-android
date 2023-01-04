@@ -47,7 +47,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation(project(path: ":client_stub"))
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
@@ -64,7 +64,6 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
 
     // gRPC
-    implementation("io.grpc:grpc-protobuf-lite:$grpc_version")
     implementation("io.grpc:grpc-kotlin-stub:$grpc_kotlin_version")
     implementation("com.google.protobuf:protobuf-kotlin-lite:$protobuf_version")
     implementation("io.grpc:grpc-android:1.51.1")

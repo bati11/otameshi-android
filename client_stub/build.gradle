@@ -1,9 +1,11 @@
 plugins {
-    id 'java'
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
     id 'com.google.protobuf'
 }
 
 dependencies {
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
 
     // gRPC
     implementation("io.grpc:grpc-stub:$grpc_version")
@@ -12,14 +14,20 @@ dependencies {
     implementation("com.google.protobuf:protobuf-kotlin-lite:$protobuf_version")
 }
 
-java {
-    sourceCompatibility JavaVersion.VERSION_11
-    targetCompatibility JavaVersion.VERSION_11
+android {
+    compileSdk = 32
+    buildToolsVersion = "32.0.0"
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
     kotlinOptions {
-        freeCompilerArgs listOf("-opt-in=kotlin.RequiresOptIn")
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        freeCompilerArgs = ["-opt-in=kotlin.RequiresOptIn"]
     }
 }
 
@@ -28,6 +36,9 @@ protobuf {
         artifact = "com.google.protobuf:protoc:$protobuf_version"
     }
     plugins {
+        java {
+            artifact = "io.grpc:protoc-gen-grpc-java:$grpc_version"
+        }
         grpc {
             artifact = "io.grpc:protoc-gen-grpc-java:$grpc_version"
         }
@@ -38,10 +49,10 @@ protobuf {
     generateProtoTasks {
         all().each { task ->
             task.builtins {
-                java { option 'lite' }
                 kotlin { option 'lite' }
             }
             task.plugins {
+                java { option 'lite' }
                 grpc { option 'lite' }
                 grpckt { option 'lite' }
             }
