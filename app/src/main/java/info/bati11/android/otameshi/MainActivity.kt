@@ -14,11 +14,17 @@ import androidx.navigation.compose.rememberNavController
 import info.bati11.android.otameshi.gateway.GreetingService
 import info.bati11.android.otameshi.ui.OtameshiTabRow
 import info.bati11.android.otameshi.ui.theme.OtameshiAppTheme
+import kotlinx.coroutines.GlobalScope
 
 class MainActivity : ComponentActivity() {
 
     private val uri by lazy { Uri.parse("http://10.0.2.2:8080") }
-    private val greetingService by lazy { GreetingService(uri) }
+    private val greetingService by lazy {
+        GreetingService(
+            uri,
+            externalScope = GlobalScope
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
