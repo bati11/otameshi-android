@@ -6,10 +6,12 @@ import info.bati11.android.otameshi.grpc.GreetingServiceGrpcKt
 import info.bati11.android.otameshi.grpc.HelloRequest
 import info.bati11.android.otameshi.grpc.HelloResponse
 import info.bati11.android.otameshi.grpc.helloRequest
-import io.grpc.*
+import io.grpc.StatusException
 import io.grpc.android.AndroidChannelBuilder
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.map
 import java.io.Closeable
 import java.util.concurrent.TimeUnit
 
@@ -75,6 +77,25 @@ class GreetingService(
         return withContext(Dispatchers.IO) {
             val request = helloRequest { this.name = name }
             clientStream.emit(request)
+        }
+    }
+
+    private val forBiStream = MutableSharedFlow<HelloRequest>()
+
+    fun connectBiStream(): Result<Flow<String>> {
+        return try {
+            val flow = stub.helloBiStreams(forBiStream).map { it.message }
+            Result.success(flow)
+        } catch (e: Throwable) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun helloBiDirection(name: String) {
+        Log.i(TAG, "helloBi($name)")
+        return withContext(Dispatchers.IO) {
+            val request = helloRequest { this.name = name }
+            forBiStream.emit(request)
         }
     }
 

@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import info.bati11.android.otameshi.gateway.GreetingService
+import info.bati11.android.otameshi.ui.BiStreamScreen
 import info.bati11.android.otameshi.ui.ClientStreamScreen
 import info.bati11.android.otameshi.ui.UnaryScreen
 
@@ -28,6 +29,12 @@ fun OtameshiNavHost(
         }
         composable(route = ClientStreamDestination.route) {
             ClientStreamScreen(
+                listOf("Piyo", "Foo", "Bar"),
+                greetingService = greetingService,
+            )
+        }
+        composable(route = BiStreamDestination.route) {
+            BiStreamScreen(
                 listOf("Piyo", "Foo", "Bar"),
                 greetingService = greetingService,
             )
