@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import info.bati11.android.otameshi.gateway.GreetingService
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnrememberedMutableState")
@@ -19,32 +20,14 @@ fun BiStreamScreen(
     greetingService: GreetingService,
     modifier: Modifier = Modifier
 ) {
-    var isConnected by remember { mutableStateOf(false) }
-    val connectResult = greetingService.connectBiStream()
-    var responseMessage = connectResult.fold(
-        onSuccess = { it.collectAsState(initial = "") },
-        onFailure = { mutableStateOf("") }
-    )
-    var connectFailMessage = connectResult.fold(
-        onSuccess = { mutableStateOf("") },
-        onFailure = { mutableStateOf(it.message ?: "connect error.") }
-    )
+    val responseMessage = greetingService.biStream.collectAsState(initial = "")
+    var connectFailMessage = greetingService.biStreamError.collectAsState(initial = "")
 
     val scope = rememberCoroutineScope()
     var index by remember { mutableStateOf(0) }
     var messages by remember { mutableStateOf(listOf<String>()) }
-    if (!isConnected) {
-        LaunchedEffect(true) {
-            greetingService.connectClientStream()
-            delay(2000)
-            isConnected = true
-            connectFailMessage.value = ""
-        }
-        Text(if (connectFailMessage.value == "") {
-            "connecting..."
-        } else {
-            "Failed to connect: $connectFailMessage.value"
-        })
+    if (connectFailMessage.value != "") {
+        Text("Failed to connect: ${connectFailMessage.value}")
     } else {
         Column() {
             Text("Success to connect.")

@@ -2,6 +2,7 @@ package info.bati11.android.otameshi.gateway
 
 import android.net.Uri
 import android.util.Log
+import androidx.compose.runtime.MutableState
 import info.bati11.android.otameshi.grpc.GreetingServiceGrpcKt
 import info.bati11.android.otameshi.grpc.HelloRequest
 import info.bati11.android.otameshi.grpc.HelloResponse
@@ -9,9 +10,7 @@ import info.bati11.android.otameshi.grpc.helloRequest
 import io.grpc.StatusException
 import io.grpc.android.AndroidChannelBuilder
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import java.io.Closeable
 import java.util.concurrent.TimeUnit
 
@@ -22,7 +21,7 @@ class GreetingService(
 ) : Closeable {
 
     companion object {
-        private val TAG = GreetingService.javaClass.simpleName
+        private val TAG = GreetingService::class.java.name
     }
 
     private val channel = let {
@@ -81,14 +80,12 @@ class GreetingService(
     }
 
     private val forBiStream = MutableSharedFlow<HelloRequest>()
-
-    fun connectBiStream(): Result<Flow<String>> {
-        return try {
-            val flow = stub.helloBiStreams(forBiStream).map { it.message }
-            Result.success(flow)
-        } catch (e: Throwable) {
-            Result.failure(e)
-        }
+    private val _biStreamError = MutableSharedFlow<Throwable>()
+    val biStreamError = _biStreamError.map { it.message ?: "connect error." }
+    val biStream: Flow<String> by lazy {
+        stub.helloBiStreams(forBiStream)
+            .map { it.message }
+            .catch { _biStreamError.emit(it) }
     }
 
     suspend fun helloBiDirection(name: String) {
@@ -100,6 +97,7 @@ class GreetingService(
     }
 
     override fun close() {
+        Log.i(TAG, "close")
         channel.shutdown().awaitTermination(5, TimeUnit.SECONDS)
     }
 }
