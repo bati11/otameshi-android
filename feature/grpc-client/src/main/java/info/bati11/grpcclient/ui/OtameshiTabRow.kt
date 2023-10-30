@@ -1,4 +1,4 @@
-package info.bati11.android.otameshi.ui
+package info.bati11.grpcclient.ui
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
@@ -22,14 +22,14 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import info.bati11.android.otameshi.OtameshiDestination
+import info.bati11.grpcclient.GrpcFeatureDestination
 import java.util.*
 
 @Composable
 fun OtameshiTabRow(
-    allScreens: List<OtameshiDestination>,
-    onTabSelected: (OtameshiDestination) -> Unit,
-    currentScreen: OtameshiDestination,
+    allScreens: List<GrpcFeatureDestination>,
+    onTabSelected: (GrpcFeatureDestination) -> Unit,
+    currentScreen: GrpcFeatureDestination,
 ) {
     Surface(
         Modifier

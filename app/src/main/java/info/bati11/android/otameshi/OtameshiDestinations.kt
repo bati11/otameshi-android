@@ -1,23 +1,20 @@
 package info.bati11.android.otameshi
 
+import info.bati11.grpcclient.GRPC_FEATURE_ROUTE
+
 interface OtameshiDestination {
     val label: String
     val route: String
 }
 
-object UnaryDestination : OtameshiDestination {
-    override val label = "Unary"
-    override val route = "Unary"
+object TopDestination : OtameshiDestination {
+    override val label = "Top"
+    override val route = "Top"
 }
 
-object ClientStreamDestination : OtameshiDestination {
-    override val label = "ClientStream"
-    override val route = "ClientStream"
+object GrpcFeatureDestination : OtameshiDestination {
+    override val label = "gRPC"
+    override val route = GRPC_FEATURE_ROUTE
 }
 
-object BiStreamDestination : OtameshiDestination {
-    override val label = "BiStream"
-    override val route = "BiStream"
-}
-
-val allTabScreens = listOf(UnaryDestination, ClientStreamDestination, BiStreamDestination)
+val allFeatures = listOf(TopDestination, GrpcFeatureDestination)

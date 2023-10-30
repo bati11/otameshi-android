@@ -1,24 +1,10 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
 }
 
 android {
-    namespace 'info.bati11.android.otameshi'
     compileSdk 32
-
-    defaultConfig {
-        applicationId "info.bati11.android.otameshi"
-        minSdk 28
-        targetSdk 32
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary true
-        }
-    }
 
     buildTypes {
         release {
@@ -47,7 +33,7 @@ android {
 }
 
 dependencies {
-    implementation(project(path: ":feature:grpc-client"))
+    implementation(project(path: ":client_stub"))
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
@@ -62,4 +48,10 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
+
+    // gRPC
+    implementation("io.grpc:grpc-kotlin-stub:$grpc_kotlin_version")
+    implementation("com.google.protobuf:protobuf-kotlin-lite:$protobuf_version")
+    implementation("io.grpc:grpc-android:1.51.1")
+    implementation("io.grpc:grpc-okhttp:1.51.1")
 }

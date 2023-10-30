@@ -1,4 +1,4 @@
-package info.bati11.android.otameshi.ui
+package info.bati11.grpcclient.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Button
@@ -6,7 +6,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import info.bati11.android.otameshi.gateway.GreetingService
+import info.bati11.grpcclient.gateway.GreetingService
 import kotlinx.coroutines.launch
 
 @Composable

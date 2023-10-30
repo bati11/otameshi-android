@@ -5,39 +5,30 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import info.bati11.android.otameshi.gateway.GreetingService
-import info.bati11.android.otameshi.ui.BiStreamScreen
-import info.bati11.android.otameshi.ui.ClientStreamScreen
-import info.bati11.android.otameshi.ui.UnaryScreen
+import info.bati11.android.otameshi.ui.FeatureListScreen
+import info.bati11.grpcclient.gateway.GreetingService
+import info.bati11.grpcclient.grpcFeatureNav
 
 @Composable
 fun OtameshiNavHost(
     greetingService: GreetingService,
     navHostController: NavHostController,
+    features: List<OtameshiDestination>,
+    onSelectFeature: (OtameshiDestination) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     NavHost(
         navController = navHostController,
-        startDestination = UnaryDestination.route,
-        modifier = modifier
+        startDestination = TopDestination.route,
+        modifier = modifier,
     ) {
-        composable(route = UnaryDestination.route) {
-            UnaryScreen(
-                "Piyo",
-                greetingService = greetingService,
+        composable(route = TopDestination.route) {
+            FeatureListScreen(
+                features,
+                onSelectedFeature = onSelectFeature,
             )
         }
-        composable(route = ClientStreamDestination.route) {
-            ClientStreamScreen(
-                listOf("Piyo", "Foo", "Bar"),
-                greetingService = greetingService,
-            )
-        }
-        composable(route = BiStreamDestination.route) {
-            BiStreamScreen(
-                listOf("Piyo", "Foo", "Bar"),
-                greetingService = greetingService,
-            )
-        }
+
+        grpcFeatureNav(greetingService = greetingService)
     }
 }

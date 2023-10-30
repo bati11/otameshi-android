@@ -1,13 +1,12 @@
-package info.bati11.android.otameshi.gateway
+package info.bati11.grpcclient.gateway
 
 import android.net.Uri
 import android.util.Log
-import androidx.compose.runtime.MutableState
 import info.bati11.android.otameshi.grpc.GreetingServiceGrpcKt
 import info.bati11.android.otameshi.grpc.HelloRequest
 import info.bati11.android.otameshi.grpc.HelloResponse
 import info.bati11.android.otameshi.grpc.helloRequest
-import io.grpc.StatusException
+import io.grpc.*
 import io.grpc.android.AndroidChannelBuilder
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -26,15 +25,30 @@ class GreetingService(
 
     private val channel = let {
         Log.d(TAG, "Connecting to ${uri.host}:${uri.port}")
+//        val builder = ManagedChannelBuilder.forAddress(uri.host, uri.port)
         val builder = AndroidChannelBuilder.forAddress(uri.host, uri.port)
         if (uri.scheme == "https") {
             builder.useTransportSecurity()
         } else {
             builder.usePlaintext()
         }
+//        builder.intercept(MyIntercepter())
         builder.executor(Dispatchers.IO.asExecutor()).build()
     }
 
+//    class MyIntercepter: ClientInterceptor {
+//        override fun <ReqT : Any?, RespT : Any?> interceptCall(
+//            method: MethodDescriptor<ReqT, RespT>?,
+//            callOptions: CallOptions?,
+//            next: Channel?
+//        ): ClientCall<ReqT, RespT> {
+//            Log.i("INTERCEPTER", "before call. method:${method.toString()}, callOptions:${callOptions}")
+//            val res = next!!.newCall(method, callOptions)
+//            Log.i("INTERCEPTER", "after call. method:${method.toString()}, callOptions:${callOptions}")
+//            return res
+//        }
+//    }
+//
     private val stub = GreetingServiceGrpcKt.GreetingServiceCoroutineStub(channel)
 
     suspend fun helloAndGet(name: String): String {
@@ -83,6 +97,7 @@ class GreetingService(
     private val _biStreamError = MutableSharedFlow<Throwable>()
     val biStreamError = _biStreamError.map { it.message ?: "connect error." }
     val biStream: Flow<String> by lazy {
+//        Log.i(TAG, "bistream lazy { }")
         stub.helloBiStreams(forBiStream)
             .map { it.message }
             .catch { _biStreamError.emit(it) }

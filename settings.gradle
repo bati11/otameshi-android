@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "OtameshiApp"
 include ':app'
 include ':client_stub'
+include ':feature:grpc-client'
