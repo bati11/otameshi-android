@@ -5,17 +5,17 @@ plugins {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    implementation(libs.kotlinx.coroutines.android)
 
     // gRPC
-    implementation("io.grpc:grpc-stub:$grpc_version")
-    implementation("io.grpc:grpc-protobuf-lite:$grpc_version")
-    implementation("io.grpc:grpc-kotlin-stub:$grpc_kotlin_version")
-    implementation("com.google.protobuf:protobuf-kotlin-lite:$protobuf_version")
+    implementation(libs.grpc.stub)
+    implementation(libs.grpc.protobuf.lite)
+    implementation(libs.grpc.kotlin.stub)
+    implementation(libs.protbuf.kotlin.lite)
 }
 
 android {
-    compileSdk = 32
+    compileSdk = rootProject.ext.compileSdk
     buildToolsVersion = "32.0.0"
 
     compileOptions {
@@ -33,17 +33,17 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:$protobuf_version"
+        artifact = "com.google.protobuf:protoc:${libs.versions.protobuf.version.get()}"
     }
     plugins {
         java {
-            artifact = "io.grpc:protoc-gen-grpc-java:$grpc_version"
+            artifact = "io.grpc:protoc-gen-grpc-java:${libs.versions.grpc.version.get()}"
         }
         grpc {
-            artifact = "io.grpc:protoc-gen-grpc-java:$grpc_version"
+            artifact = "io.grpc:protoc-gen-grpc-java:${libs.versions.grpc.version.get()}"
         }
         grpckt {
-            artifact = "io.grpc:protoc-gen-grpc-kotlin:$grpc_kotlin_version:jdk7@jar"
+            artifact = "io.grpc:protoc-gen-grpc-kotlin:${libs.versions.grpc.kotlin.version.get()}:jdk7@jar"
         }
     }
     generateProtoTasks {
