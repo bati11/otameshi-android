@@ -5,14 +5,12 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import info.bati11.grpcclient.gateway.GreetingService
 import info.bati11.grpcclient.ui.BiStreamScreen
 import info.bati11.grpcclient.ui.ClientStreamScreen
 import info.bati11.grpcclient.ui.UnaryScreen
 
 @Composable
-fun GrpcFeatureNavHost(
-    greetingService: GreetingService,
+internal fun GrpcFeatureNavHost(
     navHostController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
@@ -22,22 +20,13 @@ fun GrpcFeatureNavHost(
         modifier = modifier,
     ) {
         composable(route = UnaryDestination.route) {
-            UnaryScreen(
-                "Piyo",
-                greetingService = greetingService,
-            )
+            UnaryScreen("Piyo")
         }
         composable(route = ClientStreamDestination.route) {
-            ClientStreamScreen(
-                listOf("Piyo", "Foo", "Bar"),
-                greetingService = greetingService,
-            )
+            ClientStreamScreen(listOf("Piyo", "Foo", "Bar"))
         }
         composable(route = BiStreamDestination.route) {
-            BiStreamScreen(
-                listOf("Piyo", "Foo", "Bar"),
-                greetingService = greetingService,
-            )
+            BiStreamScreen(listOf("Piyo", "Foo", "Bar"))
         }
     }
 }

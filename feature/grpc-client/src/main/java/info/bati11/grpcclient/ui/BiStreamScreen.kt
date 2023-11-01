@@ -6,24 +6,34 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import info.bati11.grpcclient.gateway.GreetingService
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
-fun BiStreamScreen(
+internal fun BiStreamScreen(
     names: List<String>,
-    greetingService: GreetingService,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    val responseMessage = greetingService.biStream.collectAsState(initial = "")
-    var connectFailMessage = greetingService.biStreamError.collectAsState(initial = "")
+    val coroutineScope = rememberCoroutineScope()
 
-    val scope = rememberCoroutineScope()
+    val responseMessage = GreetingService.biStream.collectAsState(initial = "")
+    var connectFailMessage = GreetingService.biStreamError.collectAsState(initial = "")
+
     var index by remember { mutableStateOf(0) }
     var messages by remember { mutableStateOf(listOf<String>()) }
+    LaunchedEffect(true) {
+        GreetingService.connectBiStream()
+    }
     if (connectFailMessage.value != "") {
         Text("Failed to connect: ${connectFailMessage.value}")
     } else {
@@ -37,8 +47,8 @@ fun BiStreamScreen(
                     val name = names[index]
                     messages = messages + "$name ->"
                     index = if (index + 1 == names.size) 0 else index + 1
-                    scope.launch {
-                        greetingService.helloBiDirection(name)
+                    coroutineScope.launch {
+                        GreetingService.helloBiDirection(name)
                     }
                 },
             ) {

@@ -1,4 +1,4 @@
-package info.bati11.grpcclient.ui.theme
+package info.bati11.android.otameshi.common.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

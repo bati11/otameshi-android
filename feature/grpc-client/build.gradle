@@ -33,6 +33,7 @@ android {
 }
 
 dependencies {
+    implementation(project(path: ":common"))
     implementation(project(path: ":client_stub"))
 
     implementation(libs.core.ktx)

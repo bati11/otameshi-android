@@ -5,7 +5,9 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.MaterialTheme
@@ -26,21 +28,20 @@ import info.bati11.grpcclient.GrpcFeatureDestination
 import java.util.*
 
 @Composable
-fun OtameshiTabRow(
+internal fun GrpcAppTabRow(
     allScreens: List<GrpcFeatureDestination>,
     onTabSelected: (GrpcFeatureDestination) -> Unit,
     currentScreen: GrpcFeatureDestination,
 ) {
     Surface(
-        Modifier
-            .fillMaxWidth()
+        Modifier.fillMaxWidth(),
     ) {
         Row(Modifier.selectableGroup()) {
             allScreens.forEach { screen ->
-                OtameshiTab(
+                GrpcAppTab(
                     text = screen.label,
                     onSelected = { onTabSelected(screen) },
-                    selected = currentScreen == screen
+                    selected = currentScreen == screen,
                 )
             }
         }
@@ -48,7 +49,7 @@ fun OtameshiTabRow(
 }
 
 @Composable
-fun OtameshiTab(
+private fun GrpcAppTab(
     text: String,
     onSelected: () -> Unit,
     selected: Boolean,
@@ -59,12 +60,12 @@ fun OtameshiTab(
         tween<Color>(
             durationMillis = durationMillis,
             easing = LinearEasing,
-            delayMillis = TabFadeInAnimationDelay
+            delayMillis = TabFadeInAnimationDelay,
         )
     }
     val tabTintColor by animateColorAsState(
         targetValue = if (selected) color else color.copy(alpha = 0.6f),
-        animationSpec = animSpec
+        animationSpec = animSpec,
     )
     Row(
         modifier = Modifier
@@ -78,10 +79,10 @@ fun OtameshiTab(
                 indication = rememberRipple(
                     bounded = false,
                     radius = Dp.Unspecified,
-                    color = Color.Unspecified
-                )
+                    color = Color.Unspecified,
+                ),
             )
-            .clearAndSetSemantics { contentDescription = text }
+            .clearAndSetSemantics { contentDescription = text },
     ) {
         Text(text.uppercase(Locale.getDefault()), color = tabTintColor)
     }

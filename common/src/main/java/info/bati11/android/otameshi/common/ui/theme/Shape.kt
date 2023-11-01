@@ -1,4 +1,4 @@
-package info.bati11.android.otameshi.ui.theme
+package info.bati11.android.otameshi.common.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

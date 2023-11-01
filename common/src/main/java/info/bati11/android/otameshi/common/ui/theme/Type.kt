@@ -1,4 +1,4 @@
-package info.bati11.grpcclient.ui.theme
+package info.bati11.android.otameshi.common.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
@@ -11,7 +11,7 @@ val Typography = Typography(
     body1 = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
+        fontSize = 16.sp,
     )
     /* Other default text styles to override
     button = TextStyle(

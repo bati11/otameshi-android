@@ -3,17 +3,20 @@ package info.bati11.grpcclient.ui
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import info.bati11.grpcclient.gateway.GreetingService
 import kotlinx.coroutines.launch
 
 @Composable
-fun UnaryScreen(
+internal fun UnaryScreen(
     name: String,
-    greetingService: GreetingService? = null,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val scope = rememberCoroutineScope()
     var requestMessage by rememberSaveable { mutableStateOf("") }
@@ -31,7 +34,7 @@ fun UnaryScreen(
                 responseMessage = ""
                 requestMessage = name
                 scope.launch {
-                    responseMessage = greetingService?.helloAndGet(name) ?: ""
+                    responseMessage = GreetingService.helloAndGet(name)
                 }
             },
         ) {

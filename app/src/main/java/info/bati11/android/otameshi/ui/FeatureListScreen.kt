@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import info.bati11.android.otameshi.OtameshiDestination
-import info.bati11.android.otameshi.ui.theme.OtameshiAppTheme
+import info.bati11.android.otameshi.OtameshiFeature
+import info.bati11.android.otameshi.common.ui.theme.OtameshiAppTheme
 
 @Preview
 @Composable
@@ -29,8 +29,8 @@ fun PreviewFeatureListScreen() {
 
 @Composable
 fun FeatureListScreen(
-    features: List<OtameshiDestination> = emptyList(),
-    onSelectedFeature: (OtameshiDestination) -> Unit = {},
+    features: List<OtameshiFeature> = emptyList(),
+    onSelectedFeature: (OtameshiFeature) -> Unit = {},
 ) {
     LazyColumn {
         items(items = features) { feature ->

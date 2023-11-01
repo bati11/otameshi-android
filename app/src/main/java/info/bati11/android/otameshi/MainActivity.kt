@@ -1,6 +1,5 @@
 package info.bati11.android.otameshi
 
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -16,17 +15,14 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import info.bati11.android.otameshi.ui.theme.OtameshiAppTheme
-import info.bati11.grpcclient.gateway.GreetingService
-import kotlinx.coroutines.GlobalScope
+import info.bati11.android.otameshi.common.ui.theme.OtameshiAppTheme
 
 class MainActivity : ComponentActivity() {
 
@@ -34,21 +30,12 @@ class MainActivity : ComponentActivity() {
         private val TAG = MainActivity::class.java.name
     }
 
-    private val appScope = GlobalScope
-    private val uri by lazy { Uri.parse("http://10.0.2.2:8080") }
-    private val greetingService by lazy {
-        GreetingService(
-            uri,
-            externalScope = appScope,
-        )
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             OtameshiAppTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    GreetingApp(greetingService)
+                    OtameshiApp()
                 }
             }
         }
@@ -56,38 +43,42 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun GreetingApp(greetingService: GreetingService) {
+fun OtameshiApp() {
     val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+    val currentFeature =
+        allFeatures.find { feature ->
+            feature.route == currentDestination?.route
+        } ?: Top
 
-    var headerLabel by remember { mutableStateOf("") }
-
-    val onSelectFeature = { selectedFeature: OtameshiDestination ->
-        var nextScreen =
-            allFeatures.find { feature ->
-                feature == selectedFeature
-            } ?: TopDestination
-        navController.navigate(nextScreen.route)
-        headerLabel = nextScreen.label
+    val onSelectFeature = { selectedFeature: OtameshiFeature ->
+        navController.navigate(selectedFeature.route) {
+            popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
     }
 
     Scaffold(
         topBar = {
-            TopBar(headerLabel, onClickAppLabel = { onSelectFeature(TopDestination) })
+            TopBar(currentFeature.label, onClickAppLabel = { onSelectFeature(Top) })
         },
     ) {
         Surface(modifier = Modifier.fillMaxSize()) {
             OtameshiNavHost(
                 navHostController = navController,
-                features = allFeatures.filter { it != TopDestination },
+                features = allFeatures.filter { it != Top },
                 onSelectFeature = onSelectFeature,
-                greetingService = greetingService,
             )
         }
     }
 }
 
 @Composable
-fun TopBar(selectedFeature: String = "", onClickAppLabel: () -> Unit = {}) {
+internal fun TopBar(selectedFeature: String = "", onClickAppLabel: () -> Unit = {}) {
     Surface {
         Column(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 16.dp),

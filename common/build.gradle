@@ -1,24 +1,10 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
 }
 
 android {
-    namespace 'info.bati11.android.otameshi'
-    compileSdk rootProject.ext.compileSdk
-
-    defaultConfig {
-        applicationId "info.bati11.android.otameshi"
-        minSdk rootProject.ext.minSdk
-        targetSdk rootProject.ext.targetSdk
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary true
-        }
-    }
+    compileSdk rootProject.compileSdk
 
     buildTypes {
         release {
@@ -47,9 +33,6 @@ android {
 }
 
 dependencies {
-    implementation project(path: ":common")
-    implementation project(path: ":feature:grpc-client")
-
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.ktx)
     implementation(libs.activity.compose)
