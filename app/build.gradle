@@ -50,17 +50,20 @@ dependencies {
     implementation project(path: ":common")
     implementation project(path: ":feature:grpc-client")
 
-    implementation(libs.core.ktx)
-    implementation(libs.lifecycle.ktx)
-    implementation(libs.activity.compose)
-    implementation(libs.compose.ui)
-    implementation(libs.compose.tooling.preview)
-    implementation(libs.compose.material)
-    implementation(libs.navigation.compose)
-    testImplementation(testLibs.junit)
-    androidTestImplementation(androidTestLibs.junit.ext)
-    androidTestImplementation(androidTestLibs.espresso.core)
-    androidTestImplementation(androidTestLibs.compose.test.junit4)
-    debugImplementation(debugLibs.compose.tooling)
-    debugImplementation(debugLibs.compose.ui.test.manifest)
+    implementation platform(libs.compose.bom)
+    androidTestImplementation platform(libs.compose.bom)
+
+    implementation libs.core.ktx
+    implementation libs.lifecycle.ktx
+    implementation libs.activity.compose
+    implementation libs.compose.ui
+    implementation libs.compose.tooling.preview
+    implementation libs.compose.material
+    implementation libs.navigation.compose
+    testImplementation testLibs.junit
+    androidTestImplementation androidTestLibs.junit.ext
+    androidTestImplementation androidTestLibs.espresso.core
+    androidTestImplementation androidTestLibs.compose.test.junit4
+    debugImplementation debugLibs.compose.tooling
+    debugImplementation debugLibs.compose.ui.test.manifest
 }
