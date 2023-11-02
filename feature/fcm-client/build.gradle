@@ -1,25 +1,10 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id 'com.google.gms.google-services'
 }
 
 android {
-    namespace 'info.bati11.android.otameshi'
     compileSdk rootProject.ext.compileSdk
-
-    defaultConfig {
-        applicationId "info.bati11.android.otameshi"
-        minSdk rootProject.ext.minSdk
-        targetSdk rootProject.ext.targetSdk
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary true
-        }
-    }
 
     buildTypes {
         release {
@@ -49,13 +34,10 @@ android {
 
 dependencies {
     implementation project(path: ":common")
-    implementation project(path: ":feature:grpc-client")
-    implementation project(path: ":feature:fcm-client")
 
     implementation platform(libs.compose.bom)
     androidTestImplementation platform(libs.compose.bom)
 
-    implementation libs.play.services.base
     implementation libs.core.ktx
     implementation libs.lifecycle.ktx
     implementation libs.activity.compose
@@ -63,10 +45,16 @@ dependencies {
     implementation libs.compose.tooling.preview
     implementation libs.compose.material
     implementation libs.navigation.compose
+    implementation libs.lifecycle.viewmodel.compose
     testImplementation testLibs.junit
     androidTestImplementation androidTestLibs.junit.ext
     androidTestImplementation androidTestLibs.espresso.core
     androidTestImplementation androidTestLibs.compose.test.junit4
     debugImplementation debugLibs.compose.tooling
     debugImplementation debugLibs.compose.ui.test.manifest
+
+    // firebase
+    implementation platform(libs.firebase.bom)
+    implementation libs.firebase.messaging.ktx
+    implementation libs.firebase.analytics.ktx
 }

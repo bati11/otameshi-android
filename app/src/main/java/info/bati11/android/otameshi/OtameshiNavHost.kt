@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import info.bati11.android.otameshi.ui.FeatureListScreen
+import info.bati11.android.otameshi.fcmclient.fcmFeatureNav
 import info.bati11.grpcclient.grpcFeatureNav
 
 @Composable
@@ -25,5 +26,6 @@ fun OtameshiNavHost(
         }
 
         grpcFeatureNav()
+        fcmFeatureNav()
     }
 }

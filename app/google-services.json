@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "694966074174",
+    "project_id": "otameshi-bati11",
+    "storage_bucket": "otameshi-bati11.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:694966074174:android:f5e69da2f7208c8ea08a6f",
+        "android_client_info": {
+          "package_name": "info.bati11.android.otameshi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "694966074174-v4osblm3cuv77dj1jmeiopoi5603vs2f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQC75gWX7ZNlO0Ygo5Rv-cEj-f5de4hHw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "694966074174-v4osblm3cuv77dj1jmeiopoi5603vs2f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

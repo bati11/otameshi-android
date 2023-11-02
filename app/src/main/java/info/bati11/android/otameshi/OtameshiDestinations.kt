@@ -1,5 +1,6 @@
 package info.bati11.android.otameshi
 
+import info.bati11.android.otameshi.fcmclient.FCM_FEATURE_ROUTE
 import info.bati11.grpcclient.GRPC_FEATURE_ROUTE
 
 interface OtameshiFeature {
@@ -17,4 +18,9 @@ object GrpcFeature : OtameshiFeature {
     override val route = GRPC_FEATURE_ROUTE
 }
 
-val allFeatures = listOf(Top, GrpcFeature)
+object FcmFeature : OtameshiFeature {
+    override val label = "FCM"
+    override val route = FCM_FEATURE_ROUTE
+}
+
+val allFeatures = listOf(Top, GrpcFeature, FcmFeature)

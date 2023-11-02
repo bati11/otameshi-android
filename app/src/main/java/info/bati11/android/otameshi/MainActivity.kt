@@ -22,16 +22,17 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.google.android.gms.common.GoogleApiAvailability
 import info.bati11.android.otameshi.common.ui.theme.OtameshiAppTheme
 
 class MainActivity : ComponentActivity() {
 
-    companion object {
-        private val TAG = MainActivity::class.java.name
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Google開発者サービスがインストールされていない場合は、インストールを促すダイアログを表示する
+        GoogleApiAvailability().makeGooglePlayServicesAvailable(this)
+
         setContent {
             OtameshiAppTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
