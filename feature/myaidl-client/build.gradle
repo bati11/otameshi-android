@@ -1,25 +1,10 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id 'com.google.gms.google-services'
 }
 
 android {
-    namespace 'info.bati11.android.otameshi'
     compileSdk rootProject.ext.compileSdk
-
-    defaultConfig {
-        applicationId "info.bati11.android.otameshi"
-        minSdk rootProject.ext.minSdk
-        targetSdk rootProject.ext.targetSdk
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary true
-        }
-    }
 
     buildTypes {
         release {
@@ -45,18 +30,21 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    sourceSets {
+        main {
+            aidl {
+                srcDirs 'src/main/aidl'
+            }
+        }
+    }
 }
 
 dependencies {
     implementation project(path: ":common")
-    implementation project(path: ":feature:grpc-client")
-    implementation project(path: ":feature:fcm-client")
-    implementation project(path: ':feature:myaidl-client')
 
     implementation platform(libs.compose.bom)
     androidTestImplementation platform(libs.compose.bom)
 
-    implementation libs.play.services.base
     implementation libs.core.ktx
     implementation libs.lifecycle.ktx
     implementation libs.activity.compose
@@ -64,6 +52,7 @@ dependencies {
     implementation libs.compose.tooling.preview
     implementation libs.compose.material
     implementation libs.navigation.compose
+    implementation libs.lifecycle.viewmodel.compose
     testImplementation testLibs.junit
     androidTestImplementation androidTestLibs.junit.ext
     androidTestImplementation androidTestLibs.espresso.core

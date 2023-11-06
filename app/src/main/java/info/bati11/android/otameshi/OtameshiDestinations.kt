@@ -1,6 +1,7 @@
 package info.bati11.android.otameshi
 
 import info.bati11.android.otameshi.fcmclient.FCM_FEATURE_ROUTE
+import info.bati11.android.otameshi.myaidlclient.AIDL_FEATURE_ROUTE
 import info.bati11.grpcclient.GRPC_FEATURE_ROUTE
 
 interface OtameshiFeature {
@@ -23,4 +24,9 @@ object FcmFeature : OtameshiFeature {
     override val route = FCM_FEATURE_ROUTE
 }
 
-val allFeatures = listOf(Top, GrpcFeature, FcmFeature)
+object AidlFeature : OtameshiFeature {
+    override val label = "AIDL"
+    override val route = AIDL_FEATURE_ROUTE
+}
+
+val allFeatures = listOf(Top, GrpcFeature, FcmFeature, AidlFeature)
