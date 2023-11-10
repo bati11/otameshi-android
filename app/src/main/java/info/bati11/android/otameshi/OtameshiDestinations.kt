@@ -1,5 +1,6 @@
 package info.bati11.android.otameshi
 
+import info.bati11.android.otameshi.awsiotclient.AWS_IOT_FEATURE_ROUTE
 import info.bati11.android.otameshi.fcmclient.FCM_FEATURE_ROUTE
 import info.bati11.android.otameshi.myaidlclient.AIDL_FEATURE_ROUTE
 import info.bati11.grpcclient.GRPC_FEATURE_ROUTE
@@ -29,4 +30,9 @@ object AidlFeature : OtameshiFeature {
     override val route = AIDL_FEATURE_ROUTE
 }
 
-val allFeatures = listOf(Top, GrpcFeature, FcmFeature, AidlFeature)
+object AwsIotFeature : OtameshiFeature {
+    override val label = "AWS IoT"
+    override val route = AWS_IOT_FEATURE_ROUTE
+}
+
+val allFeatures = listOf(Top, GrpcFeature, FcmFeature, AidlFeature, AwsIotFeature)

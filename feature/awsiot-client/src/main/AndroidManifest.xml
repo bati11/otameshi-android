@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="info.bati11.android.otameshi.awsiotclient">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
+
+    <application>
+        <service
+            android:name=".service.AwsIotClientServiceWithAwsIotDeviceSdkJavaV2"
+            android:exported="false"
+            android:foregroundServiceType="dataSync"
+            tools:ignore="WrongManifestParent">
+        </service>
+        <service
+            android:name=".service.AwsIotClientServiceWithAwsAndroidSdkIot"
+            android:exported="false"
+            android:foregroundServiceType="dataSync"
+            tools:ignore="WrongManifestParent">
+        </service>
+    </application>
+</manifest>
