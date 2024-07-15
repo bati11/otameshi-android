@@ -4,6 +4,7 @@ import info.bati11.android.otameshi.awsiotclient.AWS_IOT_FEATURE_ROUTE
 import info.bati11.android.otameshi.fcmclient.FCM_FEATURE_ROUTE
 import info.bati11.android.otameshi.myaidlclient.AIDL_FEATURE_ROUTE
 import info.bati11.grpcclient.GRPC_FEATURE_ROUTE
+import info.bati11.opengles.myopengles.OPEN_GL_ES_FEATURE_ROUTE
 
 interface OtameshiFeature {
     val label: String
@@ -35,4 +36,9 @@ object AwsIotFeature : OtameshiFeature {
     override val route = AWS_IOT_FEATURE_ROUTE
 }
 
-val allFeatures = listOf(Top, GrpcFeature, FcmFeature, AidlFeature, AwsIotFeature)
+object OpenGlEsFeature : OtameshiFeature {
+    override val label = "OpenGL ES"
+    override val route = OPEN_GL_ES_FEATURE_ROUTE
+}
+
+val allFeatures = listOf(Top, GrpcFeature, FcmFeature, AidlFeature, AwsIotFeature, OpenGlEsFeature)
