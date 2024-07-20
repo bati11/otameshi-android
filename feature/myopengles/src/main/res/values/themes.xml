@@ -6,4 +6,5 @@
     </style>
 
     <style name="Theme.OtameshiApp" parent="Base.Theme.OtameshiApp" />
+    <style name="Theme.OtameshiAppCompat" parent="Theme.AppCompat.Light.NoActionBar" />
 </resources>

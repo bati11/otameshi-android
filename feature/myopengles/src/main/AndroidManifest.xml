@@ -8,6 +8,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OtameshiApp">
+        <activity
+            android:name="info.bati11.opengles.myopengles.glapp.MyOpenGlEsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.OtameshiAppCompat"
+            />
     </application>
 
 </manifest>
