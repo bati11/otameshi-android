@@ -11,7 +11,6 @@ class MyOpenGlEsActivity : AppCompatActivity() {
     companion object {
         init {
             System.loadLibrary("glapp");
-            NDKApplication.initializeNative();
         }
     }
 
@@ -33,7 +32,6 @@ class MyOpenGlEsActivity : AppCompatActivity() {
 
         // OpenGL ES 描画用のスレッドを用意
         renderThread = OpenGlEsRenderThread(glApp)
-        NDKApplication.currentRenderThread = renderThread
 
         // SurfaceViewを用意 ( TODO: TextureViewを選べるようにする
         val surfaceView = SurfaceView(this)

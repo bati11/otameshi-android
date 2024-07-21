@@ -18,10 +18,6 @@ import info.bati11.opengles.myopengles.glapp.egl.EGLManager
  */
 class OpenGlEsRenderThread(private val app: GLApplication): Thread() {
 
-    private lateinit var eglManager: EGLManager
-    var windowDevice: EGLDevice? = null
-        private set
-
     private var status: Status = Status.RUN
 
     private enum class Status {
@@ -39,8 +35,8 @@ class OpenGlEsRenderThread(private val app: GLApplication): Thread() {
         surfaceHolder.setFormat(PixelFormat.RGBA_8888)
         surfaceHolder.addCallback(SurfaceHolderCallbackImpl())
 
-        eglManager = EGLManager()
-        eglManager.initialize()
+        app.eglManager = EGLManager()
+        app.eglManager.initialize()
     }
 
     fun onPause() {
@@ -68,10 +64,10 @@ class OpenGlEsRenderThread(private val app: GLApplication): Thread() {
 
     override fun run() {
         // 描画用デバイスが生成されるまで待つ
-        while (windowDevice == null) {
+        while (app.windowDevice == null) {
             sleep()
         }
-        val device = windowDevice!!
+        val device = app.windowDevice!!
 
         // サーフェイスが使用可能な状態になるまで待つ
         while (!device.isSurfaceAvailable() && isAvailable()) {
@@ -114,12 +110,12 @@ class OpenGlEsRenderThread(private val app: GLApplication): Thread() {
     }
 
     fun waitUnbindDevice() {
-        if (windowDevice?.isDeviceThread() == true) {
+        if (app.windowDevice?.isDeviceThread() == true) {
             // 現在のスレッドにバインドされていたら解除する
-            windowDevice?.unbind()
+            app.windowDevice?.unbind()
         } else {
             // バインドが解除されるまで待つ
-            while (windowDevice?.isBinded() == true) {
+            while (app.windowDevice?.isBinded() == true) {
                 sleep()
             }
         }
@@ -132,8 +128,8 @@ class OpenGlEsRenderThread(private val app: GLApplication): Thread() {
 
         // 描画用メモリが確保された時に呼ばれる
         override fun surfaceCreated(holder: SurfaceHolder) {
-            if (windowDevice == null) {
-                windowDevice = EGLDevice(eglManager)
+            if (app.windowDevice == null) {
+                app.windowDevice = EGLDevice(app.eglManager)
             }
         }
 
@@ -145,7 +141,7 @@ class OpenGlEsRenderThread(private val app: GLApplication): Thread() {
             waitUnbindDevice()
 
             // EGLSurfaceの再構築
-            windowDevice?.onSurfaceChanged(holder, width, height)
+            app.windowDevice?.onSurfaceChanged(holder, width, height)
 
             // statusを戻す
             status = temp
@@ -159,12 +155,12 @@ class OpenGlEsRenderThread(private val app: GLApplication): Thread() {
             waitUnbindDevice()
 
             // EGLSurfaceを破棄する
-            windowDevice?.onSurfaceDestroyed()
+            app.windowDevice?.onSurfaceDestroyed()
 
             if (status == Status.DESTROY) {
                 // アプリが終了状態であればEGLの解放も行う
-                windowDevice?.destroy()
-                eglManager.destroy()
+                app.windowDevice?.destroy()
+                app.eglManager.destroy()
             }
         }
 

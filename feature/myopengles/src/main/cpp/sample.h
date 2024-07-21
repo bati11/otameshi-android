@@ -1,6 +1,8 @@
-#include <jni.h>
+#include <string>
+
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
+
 
 void sample1_initialize();
 void sample1_resized(int width, int height);

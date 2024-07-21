@@ -2,16 +2,9 @@ package info.bati11.opengles.myopengles.glapp
 
 class NDKApplication : GLApplication() {
 
-    companion object {
-        var currentRenderThread: OpenGlEsRenderThread? = null
-
-        @JvmStatic
-        external fun initializeNative()
-
-        @JvmStatic
-        fun postFrontBuffer() {
-            currentRenderThread?.windowDevice?.postFrontBuffer()
-        }
+    private val glAppPtr: Long = 0
+    fun postFrontBuffer() {
+        windowDevice?.postFrontBuffer()
     }
 
     external override fun initialize()
