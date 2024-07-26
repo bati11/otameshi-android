@@ -127,7 +127,7 @@ void sample1_rendering(GLApp* app, int width, int height) {
             (GLvoid*) position);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
-    postFrontBuffer();
+    postFrontBuffer(app);
 }
 
 void sample1_destroy(GLApp* app) {

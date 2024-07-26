@@ -1,6 +1,13 @@
-package info.bati11.opengles.myopengles.glapp
+package info.bati11.opengles.myopengles.glapp.jni
 
-class NDKApplication : GLApplication() {
+import info.bati11.opengles.myopengles.glapp.GLApplication
+
+class JniApplication : GLApplication() {
+
+    companion object {
+        @JvmStatic
+        external fun initializeNative();
+    }
 
     private val glAppPtr: Long = 0
     fun postFrontBuffer() {

@@ -5,12 +5,14 @@ import android.view.SurfaceView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import info.bati11.opengles.myopengles.glapp.jni.JniApplication
 
 class MyOpenGlEsActivity : AppCompatActivity() {
 
     companion object {
         init {
             System.loadLibrary("glapp");
+            JniApplication.initializeNative();
         }
     }
 
@@ -28,7 +30,7 @@ class MyOpenGlEsActivity : AppCompatActivity() {
         layout.addView(textView)
 
         // JNIするためのオブジェクトを用意
-        val glApp = NDKApplication()
+        val glApp = JniApplication()
 
         // OpenGL ES 描画用のスレッドを用意
         renderThread = OpenGlEsRenderThread(glApp)
