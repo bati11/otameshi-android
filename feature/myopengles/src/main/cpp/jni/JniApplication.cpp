@@ -20,6 +20,9 @@ void postFrontBuffer(GLApp* app) {
     g_javavm->GetEnv((void**) &env, JNI_VERSION_1_6);
     jmethodID method_postFrontBuffer = env->GetMethodID(g_clazz, "postFrontBuffer", "()V");
     jobject japp = ((JniApp*)app)->japp;
+
+    // フロントバッファへの反映をする
+    // JNI経由で、Javaレイヤーの EGL10.eglSwapBuffers() を呼ぶ
     env->CallVoidMethod(japp, method_postFrontBuffer);
 }
 

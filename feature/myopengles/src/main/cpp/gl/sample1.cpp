@@ -6,6 +6,7 @@ GLApp* sample1_initialize() {
     auto app = (GLApp*)malloc(sizeof(GLApp));
 
     // 頂点シェーダー
+    // このサンプルではrendering時に、2次元の頂点を3つ与えられるので、3回呼ばれる（GPUによって並列で実行される）
     const GLchar *vertex_shader_source = "attribute mediump vec4 attr_pos;" // 中精度のvec4型、変数名はattr_pos
                                          "void main() {"
                                          "  gl_Position = attr_pos;"
@@ -13,7 +14,7 @@ GLApp* sample1_initialize() {
 
     // フラグメントシェーダー（ピクセルシェーダーとも呼ばれる）
     // 塗りつぶされるピクセルの数だけ呼び出される
-    // FHDサイズのディスプレイだと 1920 * 1080 = 124,416,000回呼ばれる
+    // FHDサイズのディスプレイだと 1920 * 1080 = 124,416,000回呼ばれる（GPUによって並列で実行される）
     const GLchar *fragment_shader_source = "void main() {"
                                            "    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);"
                                            "}";
