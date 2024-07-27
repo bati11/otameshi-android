@@ -6,6 +6,7 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
         gl/GLApp.h
         gl/GLApp.cpp
         gl/sample.h
+        gl/sample_helper.cpp
         gl/sample1.cpp
         jni/JniApplication.cpp
         )

@@ -6,8 +6,6 @@
 
 struct GLApp {
     GLuint shader_program;
-    GLuint vert_shader;
-    GLuint frag_shader;
     GLint attr_pos;
 };
 

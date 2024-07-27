@@ -7,9 +7,7 @@ struct JniApp : GLApp {
     JniApp(jobject japp, GLApp* glApp) : GLApp()
     {
         JniApp::japp = japp;
-        JniApp::shader_program = glApp->frag_shader;
-        JniApp::vert_shader = glApp->vert_shader;
-        JniApp::frag_shader = glApp->frag_shader;
+        JniApp::shader_program = glApp->shader_program;
         JniApp::attr_pos = glApp->attr_pos;
     }
 };
