@@ -1,4 +1,4 @@
-#include "sample.h"
+#include "sample_helper.h"
 
 GLint Shader_compile(const GLchar* shader_source, GLenum GL_XXXX_SHADER) {
     const GLuint shader = glCreateShader(GL_XXXX_SHADER);

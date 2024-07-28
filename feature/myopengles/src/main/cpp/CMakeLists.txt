@@ -4,11 +4,11 @@ project("glapp")
 
 add_library(${CMAKE_PROJECT_NAME} SHARED
         gl/GLApp.h
-        gl/GLApp.cpp
+        gl/sample_helper.h
         gl/sample.h
-        gl/sample_helper.cpp
-        gl/sample1.cpp
-        jni/JniApplication.cpp
+        gl/sample_helper.c
+        gl/sample1.c
+        jni/JniApplication.c
         )
 
 target_link_libraries(${CMAKE_PROJECT_NAME}

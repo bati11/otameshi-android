@@ -1,12 +1,14 @@
 #ifndef OTAMESHIAPP_GLAPP_H
 #define OTAMESHIAPP_GLAPP_H
 
+#include "jni.h"
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
 
-struct GLApp {
+typedef struct {
+    jobject japp;
     GLuint shader_program;
-    GLint attr_pos;
-};
+    void* ext;
+} GLApp;
 
 #endif //OTAMESHIAPP_GLAPP_H

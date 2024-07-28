@@ -1,9 +1,15 @@
 #include "sample.h"
 
+typedef struct {
+    GLint attr_pos;
+} Extension_Sample1;
+
 GLApp* sample1_initialize() {
     __android_log_print(ANDROID_LOG_INFO, "glapp", "initialize");
 
-    auto app = (GLApp*)malloc(sizeof(GLApp));
+    GLApp* app = (GLApp*)malloc(sizeof(GLApp));
+    app->ext = (Extension_Sample1*) malloc(sizeof(Extension_Sample1));
+    Extension_Sample1 *ext = app->ext;
 
     // 頂点シェーダー
     // このサンプルではrendering時に、2次元の頂点を3つ与えられるので、3回呼ばれる（GPUによって並列で実行される）
@@ -24,8 +30,8 @@ GLApp* sample1_initialize() {
             vertex_shader_source,
             fragment_shader_source);
 
-    app->attr_pos = glGetAttribLocation(app->shader_program, "attr_pos");
-    assert(app->attr_pos >= 0);
+    ext->attr_pos = glGetAttribLocation(app->shader_program, "attr_pos");
+    assert(ext->attr_pos >= 0);
 
     glUseProgram(app->shader_program);
     assert(glGetError() == GL_NO_ERROR);
@@ -45,7 +51,9 @@ void sample1_rendering(GLApp* app, int width, int height) {
     glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glEnableVertexAttribArray(app->attr_pos);
+    Extension_Sample1 *ext = (Extension_Sample1*)app->ext;
+
+    glEnableVertexAttribArray(ext->attr_pos);
     // 正規化されたデバイス座標系
     const GLfloat position[] = {
             0.0f, 1.0f,
@@ -53,7 +61,7 @@ void sample1_rendering(GLApp* app, int width, int height) {
             -1.0f, -1.0f
     };
     glVertexAttribPointer(
-            app->attr_pos, // 頂点データを関連づけるattribute変数
+            ext->attr_pos, // 頂点データを関連づけるattribute変数
             2,             // 頂点データの要素数（2次元なので x,y の2つ）
             GL_FLOAT,      // 頂点データの型
             GL_FALSE,      // normalized 頂点データを正規化して頂点シェーダーに渡す場合はGL_TRUE
