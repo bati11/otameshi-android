@@ -8,6 +8,7 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
         gl/sample.h
         gl/sample_helper.c
         gl/sample1.c
+        gl/sample2.c
         jni/JniApplication.c
         )
 
