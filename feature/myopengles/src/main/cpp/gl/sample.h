@@ -1,3 +1,6 @@
+#ifndef OTAMESHIAPP_SAMPLE_H
+#define OTAMESHIAPP_SAMPLE_H
+
 #include "sample_helper.h"
 
 void postFrontBuffer(GLApp* app);
@@ -11,3 +14,5 @@ GLApp* sample2_initialize();
 void sample2_resized(GLApp* app, int width, int height);
 void sample2_rendering(GLApp* app, int width, int height);
 void sample2_destroy(GLApp* app);
+
+#endif //OTAMESHIAPP_SAMPLE_H

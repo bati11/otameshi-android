@@ -1,3 +1,6 @@
+#ifndef OTAMESHIAPP_SAMPLE_HELPER_H
+#define OTAMESHIAPP_SAMPLE_HELPER_H
+
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
@@ -25,3 +28,5 @@ typedef struct vec2 {
 } vec2;
 
 GLuint Shader_createProgramFromSource(const GLchar* vertex_shader_source, const GLchar* fragment_shader_source);
+
+#endif //OTAMESHIAPP_SAMPLE_HELPER_H

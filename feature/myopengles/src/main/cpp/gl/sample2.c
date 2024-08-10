@@ -7,10 +7,9 @@ typedef struct {
     vec2 pos;
 } Extension_Sample2;
 
-GLApp* sample2_initialize() {
+GLApp* sample2_initialize(GLApp* app) {
     __android_log_print(ANDROID_LOG_INFO, "glapp", "initialize");
 
-    GLApp *app = (GLApp*)malloc(sizeof(GLApp));
     app->ext = (Extension_Sample2*) malloc(sizeof(Extension_Sample2));
     Extension_Sample2 *ext = app->ext;
 

@@ -4,10 +4,9 @@ typedef struct {
     GLint attr_pos;
 } Extension_Sample1;
 
-GLApp* sample1_initialize() {
+GLApp* sample1_initialize(GLApp* app) {
     __android_log_print(ANDROID_LOG_INFO, "glapp", "initialize");
 
-    GLApp* app = (GLApp*)malloc(sizeof(GLApp));
     app->ext = (Extension_Sample1*) malloc(sizeof(Extension_Sample1));
     Extension_Sample1 *ext = app->ext;
 
