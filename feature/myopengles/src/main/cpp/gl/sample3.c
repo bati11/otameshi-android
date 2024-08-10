@@ -130,13 +130,13 @@ void sample3_rendering(GLApp* app, int width, int height) {
 
     const GLfloat uv[] = {
             // 左上
-            0, 0,
+            0.25f, 0.25f,
             // 左下
-            0, 1,
+            0, 0.75f,
             // 右上
-            1, 0,
+            1, 0.25f,
             // 右下
-            1, 1,
+            0.75f, 0.75f,
     };
     glVertexAttribPointer(ext->attr_pos, 2, GL_FLOAT, GL_FALSE, 0, (GLvoid*) position);
     glVertexAttribPointer(ext->attr_uv, 2, GL_FLOAT, GL_FALSE, 0, (GLvoid*) uv);
