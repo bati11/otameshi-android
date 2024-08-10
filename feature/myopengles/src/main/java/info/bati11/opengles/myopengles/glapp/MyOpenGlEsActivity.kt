@@ -30,7 +30,7 @@ class MyOpenGlEsActivity : AppCompatActivity() {
         layout.addView(textView)
 
         // JNIするためのオブジェクトを用意
-        val glApp = JniApplication()
+        val glApp = JniApplication(this)
 
         // OpenGL ES 描画用のスレッドを用意
         renderThread = OpenGlEsRenderThread(glApp)

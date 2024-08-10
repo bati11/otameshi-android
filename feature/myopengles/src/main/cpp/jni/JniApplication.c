@@ -1,7 +1,7 @@
 #include "jni.h"
 #include "./support.h"
 
-const int sample_number = 2;
+const int sample_number = 3;
 
 JNIEXPORT void JNICALL
 Java_info_bati11_opengles_myopengles_glapp_jni_JniApplication_initializeNative(JNIEnv *env, jclass clazz) {
@@ -22,6 +22,9 @@ JNIEXPORT void JNICALL Java_info_bati11_opengles_myopengles_glapp_jni_JniApplica
             break;
         case 2:
             sample2_initialize((GLApp*)(app));
+            break;
+        case 3:
+            sample3_initialize((GLApp*)(app));
             break;
     }
 
@@ -46,6 +49,9 @@ JNIEXPORT void JNICALL Java_info_bati11_opengles_myopengles_glapp_jni_JniApplica
         case 2:
             sample2_resized((GLApp*)(app), width, height);
             break;
+        case 3:
+            sample3_resized((GLApp*)(app), width, height);
+            break;
     }
 }
 
@@ -66,6 +72,9 @@ JNIEXPORT void JNICALL Java_info_bati11_opengles_myopengles_glapp_jni_JniApplica
         case 2:
             sample2_rendering((GLApp*)(app), width, height);
             break;
+        case 3:
+            sample3_rendering((GLApp*)(app), width, height);
+            break;
     }
 }
 
@@ -83,6 +92,9 @@ JNIEXPORT void JNICALL Java_info_bati11_opengles_myopengles_glapp_jni_JniApplica
             break;
         case 2:
             sample2_destroy((GLApp*)(app));
+            break;
+        case 3:
+            sample3_destroy((GLApp*)(app));
             break;
     }
 }
