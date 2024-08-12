@@ -10,6 +10,7 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
         gl/sample1.c
         gl/sample2.c
         gl/sample3.c
+        gl/sample4.c
         jni/support.h
         jni/support.c
         jni/gl_helper.c
