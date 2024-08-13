@@ -4,7 +4,7 @@ typedef struct {
     GLint attr_pos;
 } Extension_Sample1;
 
-GLApp* sample1_initialize(GLApp* app) {
+void sample1_initialize(GLApp* app) {
     __android_log_print(ANDROID_LOG_INFO, "glapp", "initialize");
 
     app->ext = (Extension_Sample1*) malloc(sizeof(Extension_Sample1));
@@ -34,8 +34,6 @@ GLApp* sample1_initialize(GLApp* app) {
 
     glUseProgram(app->shader_program);
     assert(glGetError() == GL_NO_ERROR);
-
-    return app;
 }
 
 void sample1_resized(GLApp* app, int width, int height) {

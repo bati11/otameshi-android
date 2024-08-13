@@ -8,7 +8,7 @@ typedef struct {
     GLuint* texture_id[2];
 } Extension_Sample4;
 
-GLApp* sample4_initialize(GLApp *app) {
+void sample4_initialize(GLApp *app) {
     __android_log_print(ANDROID_LOG_INFO, "glapp", "initialize");
     app->ext = (Extension_Sample4*) malloc(sizeof(Extension_Sample4));
     Extension_Sample4 *ext = app->ext;
@@ -102,8 +102,6 @@ GLApp* sample4_initialize(GLApp *app) {
 
     glUseProgram(app->shader_program);
     assert(glGetError() == GL_NO_ERROR);
-
-    return app;
 }
 
 void sample4_resized(GLApp* app, int width, int height) {

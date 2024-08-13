@@ -7,10 +7,9 @@ typedef struct {
     GLuint texture_id;
 } Extension_LoadTexture;
 
-GLApp* sample3_initialize(GLApp *app) {
+void sample3_initialize(GLApp *app) {
     __android_log_print(ANDROID_LOG_INFO, "glapp", "initialize");
 
-//    GLApp *app = (GLApp*)malloc(sizeof(GLApp));
     app->ext = (Extension_LoadTexture*) malloc(sizeof(Extension_LoadTexture));
     Extension_LoadTexture *ext = app->ext;
 
