@@ -1,6 +1,7 @@
 #ifndef OTAMESHIAPP_SAMPLE_HELPER_H
 #define OTAMESHIAPP_SAMPLE_HELPER_H
 
+#include <math.h>
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
@@ -13,22 +14,63 @@
 #include "GLApp.h"
 
 /**
+ * シェーターのコンパイルとリンク
+ */
+GLuint Shader_createProgramFromSource(const GLchar* vertex_shader_source, const GLchar* fragment_shader_source);
+
+/**
  * 2次元ベクトルを保持する構造体
  */
 typedef struct vec2 {
-    /**
-     * X値
-     */
     GLfloat x;
-
-    /**
-     * Y値
-     */
     GLfloat y;
 } vec2;
 
-GLuint Shader_createProgramFromSource(const GLchar* vertex_shader_source, const GLchar* fragment_shader_source);
+/**
+ * 3次元ベクトルを保持する構造体
+ */
+typedef struct vec3 {
+    GLfloat x;
+    GLfloat y;
+    GLfloat z;
+} vec3;
 
+vec3 vec3_create(const GLfloat x, const GLfloat y, const GLfloat z);
+GLfloat vec3_length(const vec3 v);
+vec3 vec3_normalize(const vec3 v);
+vec3 vec3_createNormalized(const GLfloat x, const GLfloat y, const GLfloat z);
+
+/**
+ * 行列を表す構造体
+ */
+typedef struct mat4 {
+    GLfloat m[4][4];
+} mat4;
+
+/**
+ * 単位行列をつくる
+ */
+mat4 mat4_identity();
+
+/**
+ * 移動行列をつくる
+ */
+mat4 mat4_translate(const GLfloat x, const GLfloat y, const GLfloat z);
+
+/**
+ * 拡大縮小行列
+ */
+mat4 mat4_scale(const GLfloat x, const GLfloat y, const GLfloat z);
+
+/**
+ * 回転行列
+ */
+mat4 mat4_rotate(const vec3 axis, const GLfloat rotate);
+
+/**
+ * 行列×行列
+ */
+mat4 mat4_multiply(const mat4 a, const mat4 b);
 
 /**
  * RGBA各8bit色
