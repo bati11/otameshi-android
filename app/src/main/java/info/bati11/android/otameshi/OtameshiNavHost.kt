@@ -9,6 +9,7 @@ import info.bati11.android.otameshi.ui.FeatureListScreen
 import info.bati11.android.otameshi.fcmclient.fcmFeatureNav
 import info.bati11.android.otameshi.myaidlclient.aidlFeatureNav
 import info.bati11.grpcclient.grpcFeatureNav
+import info.bati11.opengles.myopengles.openGlEsFeatureNav
 
 @Composable
 fun OtameshiNavHost(
@@ -31,5 +32,6 @@ fun OtameshiNavHost(
         fcmFeatureNav()
         aidlFeatureNav()
         awsIotFeature()
+        openGlEsFeatureNav()
     }
 }
